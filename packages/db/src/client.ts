@@ -5,6 +5,12 @@ import * as schema from './schema';
 
 const url = process.env.DATABASE_URL;
 if (!url) throw new Error('DATABASE_URL is not set (copy .env.example to .env)');
+if (!/^postgres(ql)?:\/\/.+@.+/.test(url)) {
+  throw new Error(
+    `DATABASE_URL is not a database address (got "${url.slice(0, 40)}"). It must look like ` +
+      'postgresql://user:password@host/dbname – on Render copy it from your PostgreSQL → Connect → Internal Database URL.',
+  );
+}
 // On a host like Render there is no database on localhost: the local .env value was copied by mistake.
 if ((process.env.RENDER || process.env.VERCEL) && /@(localhost|127\.0\.0\.1|\[::1\])[:/]/.test(url)) {
   throw new Error(
