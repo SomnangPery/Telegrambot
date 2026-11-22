@@ -82,8 +82,20 @@ DataEF needs no API key. Its catalogue API is rate-limited, so the import goes o
 
 ## Deploy
 
-- **Server (Railway/Render):** start command `pnpm --filter @sour/server start`. Set every `.env` value, plus `BOT_MODE=webhook` and `PUBLIC_URL=https://<host>`. The webhook is registered at `/telegram/webhook` with `TELEGRAM_WEBHOOK_SECRET`.
-- **Dashboard (Vercel):** root `apps/dashboard`, build `pnpm build`, output `dist`. Set `VITE_API_URL=https://<server host>`, and set `DASHBOARD_URL` on the server to the Vercel URL (CORS).
+### Render (recommended, one click)
+
+`render.yaml` creates **one web service** (bot + scheduler + API + dashboard on the same address) and **one Postgres database**.
+
+1. Render dashboard → **New → Blueprint** → choose this GitHub repo.
+2. Fill in the two secrets it asks for: `TELEGRAM_BOT_TOKEN` and `AI_API_KEY` (Gemini; may be left empty). `SEED_OFFICER_PASSWORD` is only needed when `DEMO_MODE=false`.
+3. **Apply.** On first start the server creates the tables, loads all 25 provinces / 14,522 villages from `data/locations.json.gz`, creates `officer@demo.kh` and `ngo@demo.kh`, and connects the Telegram webhook to `https://<service>.onrender.com/telegram/webhook` (Render's `RENDER_EXTERNAL_URL`).
+4. Open `https://<service>.onrender.com` for the dashboard.
+
+Notes:
+- **Free plan sleeps** after 15 minutes without traffic. A Telegram message wakes it (first reply ~1 min), but the **6 AM brief and hourly alerts don't run while it sleeps**. Switch the web service to **Starter** for the demo week.
+- **Free Postgres expires after 30 days.**
+- **One bot, one server.** Once the webhook is set, a local `pnpm dev` with the same token will *not* start polling (it would cut off the live bot). Use a second BotFather bot for local development, or set `ALLOW_WEBHOOK_TAKEOVER=true` to take the bot back locally.
+- Locations snapshot: refresh with `pnpm db:import && pnpm --filter @sour/db export-locations`.
 
 ## Privacy
 

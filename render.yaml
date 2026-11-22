@@ -1,0 +1,57 @@
+# Render Blueprint: one web service (bot + scheduler + API + dashboard) and one Postgres database.
+# Deploy: Render dashboard → New → Blueprint → pick this GitHub repo → fill in the secrets it asks for.
+services:
+  - type: web
+    name: sour-dataef
+    runtime: node
+    region: singapore
+    # "free" sleeps after 15 min without traffic: the 6 AM brief and hourly alerts will NOT run
+    # while asleep. Use "starter" (always on) for the real demo.
+    plan: free
+    buildCommand: npx --yes pnpm@9.15.9 install --frozen-lockfile --prod=false && npx --yes pnpm@9.15.9 --filter @sour/dashboard build
+    startCommand: cd apps/server && ./node_modules/.bin/tsx src/index.ts
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: TZ
+        value: Asia/Phnom_Penh
+      - key: DATABASE_URL
+        fromDatabase:
+          name: sour-dataef-db
+          property: connectionString
+      - key: AUTO_MIGRATE
+        value: "true"
+      # Telegram
+      - key: BOT_MODE
+        value: webhook
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false # you paste it when creating the Blueprint
+      - key: TELEGRAM_WEBHOOK_SECRET
+        generateValue: true
+      # DataEF + forecast
+      - key: DATAEF_MODE
+        value: live
+      - key: DATAEF_BASE_URL
+        value: https://data.mef.gov.kh
+      # AI
+      - key: AI_PROVIDER
+        value: gemini
+      - key: AI_MODEL
+        value: gemini-3.8-flash
+      - key: AI_API_KEY
+        sync: false # Gemini API key (leave empty to run without AI)
+      # Dashboard
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DEMO_MODE
+        value: "true" # role picker instead of a password page; set "false" for real use
+      - key: SEED_OFFICER_PASSWORD
+        sync: false # password for officer@demo.kh / ngo@demo.kh when DEMO_MODE is false
+
+databases:
+  - name: sour-dataef-db
+    region: singapore
+    plan: free # free Render Postgres expires after 30 days; upgrade before relying on it
+    databaseName: sour_dataef
+    user: sour

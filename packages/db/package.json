@@ -9,6 +9,7 @@
     "seed": "tsx scripts/seed.ts",
     "import-dataef": "tsx scripts/import-dataef.ts",
     "import-csv": "tsx scripts/import-csv.ts",
+    "export-locations": "tsx scripts/export-locations.ts",
     "typecheck": "tsc -p ."
   },
   "dependencies": {

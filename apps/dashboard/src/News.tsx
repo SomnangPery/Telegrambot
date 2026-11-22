@@ -20,6 +20,7 @@ export function NewsPanel({ me }: { me: Officer }) {
   const [text, setText] = useState('');
   const [reach, setReach] = useState<number | null>(null);
   const [busy, setBusy] = useState(false);
+  const [confirming, setConfirming] = useState(false);
   const [result, setResult] = useState('');
   const [error, setError] = useState('');
 
@@ -49,7 +50,7 @@ export function NewsPanel({ me }: { me: Officer }) {
   const sender = me.orgNameKm || me.orgName || me.name;
 
   async function send() {
-    if (!confirm(`Send this announcement to ${reach ?? 0} farmer(s)?`)) return;
+
     setBusy(true);
     setResult('');
     setError('');
@@ -59,6 +60,7 @@ export function NewsPanel({ me }: { me: Officer }) {
         `✅ Sent to ${r.sent} of ${r.recipients} farmers${r.failed ? `, ${r.failed} failed` : ''}${r.blocked ? `, ${r.blocked} had blocked the bot` : ''}.`,
       );
       setTitle('');
+      setConfirming(false);
       setText('');
       reload();
     } catch (e) {
@@ -71,7 +73,7 @@ export function NewsPanel({ me }: { me: Officer }) {
   return (
     <main className="grid min-h-0 flex-1 grid-cols-1 gap-4 overflow-y-auto p-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
       {/* ---------------- Composer ---------------- */}
-      <section className="space-y-4 rounded-xl bg-white p-5 ring-1 ring-slate-200">
+      <section className="space-y-4 rounded-2xl bg-white p-5 ring-1 ring-slate-200">
         <div>
           <h2 className="text-lg font-semibold">📰 New announcement</h2>
           <p className="km text-sm text-slate-500">
@@ -135,7 +137,7 @@ export function NewsPanel({ me }: { me: Officer }) {
             onChange={(e) => setTitle(e.target.value)}
             maxLength={120}
             placeholder="ឧ. វគ្គបណ្តុះបណ្តាលដោយឥតគិតថ្លៃ"
-            className="km mt-1 w-full rounded-lg border border-slate-300 px-3 py-2"
+            className="input km mt-1"
           />
         </div>
 
@@ -147,36 +149,60 @@ export function NewsPanel({ me }: { me: Officer }) {
             rows={6}
             maxLength={2000}
             placeholder="សរសេរសេចក្តីជូនដំណឹងជាភាសាខ្មែរ…"
-            className="km mt-1 w-full rounded-lg border border-slate-300 p-3 text-sm"
+            className="input km mt-1"
           />
           <div className="text-right text-xs text-slate-400">{text.length}/2000</div>
         </div>
 
-        {text.trim() && (
-          <div className="km rounded-lg bg-sky-50 p-3 text-sm whitespace-pre-wrap ring-1 ring-sky-100">
-            <div className="mb-1 text-xs text-sky-700">Preview on Telegram</div>
-            📰 សេចក្តីជូនដំណឹងពី {sender}
-            {'\n\n'}
-            {title.trim() && `【${title.trim()}】\n`}
-            {text.trim()}
-            {'\n\n'}ℹ️ បិទព័ត៌មានពីដៃគូ៖ /settings
+        <div>
+          <label className="text-sm font-medium">4. Preview on Telegram</label>
+          <div className="mt-1 rounded-2xl bg-[#e6ebee] p-3">
+            <div className="km max-w-[90%] rounded-2xl rounded-tl-sm bg-white p-3 text-sm whitespace-pre-wrap shadow-sm">
+              {text.trim() ? (
+                <>
+                  📰 សេចក្តីជូនដំណឹងពី {sender}
+                  {'\n\n'}
+                  {title.trim() && `【${title.trim()}】\n`}
+                  {text.trim()}
+                  {'\n\n'}ℹ️ បិទព័ត៌មានពីដៃគូ៖ /settings
+                </>
+              ) : (
+                <span className="text-slate-400">Your announcement will appear here.</span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {error && <p className="rounded-xl bg-red-50 p-3 text-sm text-red-700">{error}</p>}
+        {result && <p className="rounded-xl bg-emerald-50 p-3 text-sm text-emerald-900">{result}</p>}
+
+        {!confirming ? (
+          <button
+            onClick={() => setConfirming(true)}
+            disabled={busy || !text.trim() || !selected.length || remaining === 0}
+            className="btn-primary w-full"
+          >
+            {!selected.length ? 'Choose who should receive it first' : `Send to ${reach ?? 0} farmer(s) →`}
+          </button>
+        ) : (
+          <div className="space-y-2 rounded-xl bg-slate-50 p-3">
+            <p className="text-sm">
+              Send this announcement to <b>{reach ?? 0}</b> farmer(s)? This cannot be undone.
+            </p>
+            <div className="flex gap-2">
+              <button className="btn-ghost flex-1" disabled={busy} onClick={() => setConfirming(false)}>
+                Back
+              </button>
+              <button className="btn-primary flex-1" disabled={busy} onClick={send}>
+                {busy ? 'Sending…' : '✅ Yes, send now'}
+              </button>
+            </div>
           </div>
         )}
-
-        {error && <p className="text-sm text-red-600">{error}</p>}
-        {result && <p className="text-sm">{result}</p>}
-
-        <button
-          onClick={send}
-          disabled={busy || !text.trim() || !selected.length || remaining === 0}
-          className="w-full rounded-lg bg-emerald-700 py-2.5 font-medium text-white hover:bg-emerald-800 disabled:opacity-50"
-        >
-          {busy ? 'Sending…' : `Send to ${reach ?? 0} farmer(s)`}
-        </button>
       </section>
 
       {/* ---------------- History / reach report ---------------- */}
-      <section className="rounded-xl bg-white p-5 ring-1 ring-slate-200">
+      <section className="rounded-2xl bg-white p-5 ring-1 ring-slate-200">
         <h2 className="text-lg font-semibold">Sent announcements</h2>
         <p className="text-sm text-slate-500">Reach per announcement, for your reports.</p>
         <ul className="mt-3 space-y-3">
