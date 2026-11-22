@@ -16,14 +16,19 @@ import { startScheduler } from './jobs';
 import { setDeliveryBot } from './services/delivery';
 
 const PORT = Number(process.env.PORT ?? 3000);
-const mode = process.env.BOT_MODE === 'webhook' ? 'webhook' : 'polling';
+// On Render (RENDER=true) default to webhook mode: polling stops whenever a free instance sleeps.
+const ON_RENDER = !!process.env.RENDER;
+const mode = (process.env.BOT_MODE ?? (ON_RENDER ? 'webhook' : 'polling')) === 'webhook' ? 'webhook' : 'polling';
+if (ON_RENDER && mode === 'polling')
+  console.warn('⚠ BOT_MODE=polling on Render: set BOT_MODE=webhook (polling stops while the service sleeps).');
 // Render sets RENDER_EXTERNAL_URL automatically (e.g. https://sour-dataef.onrender.com).
 const PUBLIC_URL = (process.env.PUBLIC_URL || process.env.RENDER_EXTERNAL_URL || '').replace(/\/$/, '');
 const DASHBOARD_DIST = join(ROOT_DIR, 'apps', 'dashboard', 'dist');
 
 async function main() {
   // 1. Database: tables (production), then all of Cambodia + demo accounts if the DB is empty.
-  if ((process.env.AUTO_MIGRATE ?? 'false').toLowerCase() === 'true') await runMigrations();
+  // Creates/updates tables. Always on Render (unless AUTO_MIGRATE=false); opt-in elsewhere.
+  if ((process.env.AUTO_MIGRATE ?? (ON_RENDER ? 'true' : 'false')).toLowerCase() === 'true') await runMigrations();
   await ensureLocations();
   await ensureAccounts();
 
