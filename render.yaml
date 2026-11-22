@@ -41,7 +41,10 @@ services:
         value: gemini-3.8-flash
       - key: AI_API_KEY
         sync: false # Gemini API key (leave empty to run without AI)
-      # Dashboard
+      # Dashboard (also served by this service). If the dashboard is on Vercel, its address must be
+      # allowed here; "*" wildcards are supported. Add your own domain if you use one.
+      - key: DASHBOARD_URL
+        value: https://*.vercel.app
       - key: JWT_SECRET
         generateValue: true
       - key: DEMO_MODE

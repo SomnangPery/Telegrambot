@@ -29,8 +29,15 @@ async function main() {
 
   // 2. HTTP: API, Telegram webhook, and the built dashboard on the same address.
   const app = Fastify({ logger: { level: 'warn' } });
+  // Dashboard origins allowed to call the API from another domain (e.g. Vercel).
+  // Comma-separated; "*" wildcards allowed: DASHBOARD_URL=https://sour-dataef.vercel.app,https://*.vercel.app
+  const allowed = (process.env.DASHBOARD_URL ?? 'http://localhost:5173')
+    .split(',')
+    .map((s) => s.trim().replace(/\/$/, ''))
+    .filter(Boolean)
+    .map((s) => new RegExp(`^${s.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '[a-z0-9-]+')}$`, 'i'));
   await app.register(cors, {
-    origin: (process.env.DASHBOARD_URL ?? 'http://localhost:5173').split(',').map((s) => s.trim()),
+    origin: (origin, cb) => cb(null, !origin || allowed.some((re) => re.test(origin))),
   });
   await app.register(jwt, { secret: process.env.JWT_SECRET || 'dev-only-secret-change-me' });
   if (!process.env.JWT_SECRET) console.warn('⚠ JWT_SECRET not set – using an insecure dev secret');

@@ -1,5 +1,6 @@
 // Thin typed client for the backend API (tech design §6.5).
-const BASE = import.meta.env.VITE_API_URL ?? '';
+// Empty = same address as the dashboard (Render, local dev). On Vercel set VITE_API_URL to the Render URL.
+const BASE = (import.meta.env.VITE_API_URL ?? '').replace(/\/+$/, '');
 
 export type RiskLevel = 'urgent' | 'watch' | 'normal';
 export type RiskReason = 'heavy_rain' | 'storm' | 'heat' | 'rain' | 'warm';

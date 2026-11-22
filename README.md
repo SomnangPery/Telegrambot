@@ -95,6 +95,17 @@ Notes:
 - **Free plan sleeps** after 15 minutes without traffic. A Telegram message wakes it (first reply ~1 min), but the **6 AM brief and hourly alerts don't run while it sleeps**. Switch the web service to **Starter** for the demo week.
 - **Free Postgres expires after 30 days.**
 - **One bot, one server.** Once the webhook is set, a local `pnpm dev` with the same token will *not* start polling (it would cut off the live bot). Use a second BotFather bot for local development, or set `ALLOW_WEBHOOK_TAKEOVER=true` to take the bot back locally.
+- `DATABASE_URL` must be the Render Postgres **Internal Database URL**, never the `localhost` value from your local `.env`.
+
+### Vercel (optional: dashboard only)
+
+The Render service already serves the dashboard. To host it on Vercel instead:
+
+1. Vercel → **Add New → Project** → import this repo.
+2. **Root Directory:** `apps/dashboard` (framework Vite; build/output come from `apps/dashboard/vercel.json`).
+3. **Environment variable:** `VITE_API_URL` = your Render URL, e.g. `https://sour-dataef.onrender.com` (no trailing `/api`).
+4. On Render, make sure `DASHBOARD_URL` allows the Vercel address (default `https://*.vercel.app`).
+
 - Locations snapshot: refresh with `pnpm db:import && pnpm --filter @sour/db export-locations`.
 
 ## Privacy
