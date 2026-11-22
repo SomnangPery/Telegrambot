@@ -1,0 +1,21 @@
+{
+  "name": "@sour/ai",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p ."
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "latest",
+    "@google/genai": "^3.6.1",
+    "@sour/dataef": "workspace:*",
+    "@sour/db": "workspace:*",
+    "@sour/messages": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2"
+  }
+}

@@ -1,0 +1,312 @@
+{
+  "updated_at": "2026-11-20T08:00:00+07:00",
+  "source": "MAFF (AMIS) & Cambodia Rice Federation (CRF)",
+  "items": [
+    {
+      "id": "paddy_phka_rumduol",
+      "category": "paddy",
+      "name_km": "ស្រូវផ្ការំដួល (ស្រូវសើម)",
+      "name_en": "Phka Rumduol Paddy (Wet)",
+      "aliases_km": [
+        "ផ្ការំដួល",
+        "ស្រូវផ្ការំដួល",
+        "ស្រូវក្រអូប"
+      ],
+      "aliases_en": [
+        "phka rumduol",
+        "fragrant rice",
+        "jasmine paddy"
+      ],
+      "price_min": 1400,
+      "price_max": 1550,
+      "price_avg": 1480,
+      "unit": "kg",
+      "market": "Battambang & Banteay Meanchey Millers",
+      "note_km": "តម្លៃទិញដល់ជង្រុក ឬរោងម៉ាស៊ីនកិនស្រូវ (សំណើម ~25%)",
+      "note_en": "Farmgate/mill purchase price (moisture ~25%)",
+      "market_km": "រោងម៉ាស៊ីនកិនស្រូវ បាត់ដំបង និងបន្ទាយមានជ័យ"
+    },
+    {
+      "id": "paddy_sen_kra_ob",
+      "category": "paddy",
+      "name_km": "ស្រូវសែនក្រអូប (ស្រូវសើម)",
+      "name_en": "Sen Kra Ob Paddy (Wet)",
+      "aliases_km": [
+        "សែនក្រអូប",
+        "ស្រូវសែនក្រអូប"
+      ],
+      "aliases_en": [
+        "sen kra ob",
+        "sen kraob",
+        "sko"
+      ],
+      "price_min": 1250,
+      "price_max": 1380,
+      "price_avg": 1320,
+      "unit": "kg",
+      "market": "Battambang & Takeo",
+      "note_km": "ស្រូវក្រអូបស្រាលរដូវវស្សា",
+      "note_en": "Early-maturing fragrant paddy",
+      "market_km": "បាត់ដំបង និងតាកែវ"
+    },
+    {
+      "id": "paddy_ir504",
+      "category": "paddy",
+      "name_km": "ស្រូវប្រាំង IR504 / OM",
+      "name_en": "IR504 / OM Dry Season Paddy",
+      "aliases_km": [
+        "អាយអ៊ែរ",
+        "៥០៤",
+        "ស្រូវប្រាំង",
+        "ir504"
+      ],
+      "aliases_en": [
+        "ir504",
+        "om5451",
+        "dry season paddy"
+      ],
+      "price_min": 1020,
+      "price_max": 1150,
+      "price_avg": 1080,
+      "unit": "kg",
+      "market": "Prey Veng & Takeo",
+      "note_km": "ស្រូវសម្រាប់កែច្នៃ និងនាំចេញតាមព្រំដែន",
+      "note_en": "Export and processing paddy variety",
+      "market_km": "ព្រៃវែង និងតាកែវ"
+    },
+    {
+      "id": "rice_phka_rumduol_milled",
+      "category": "rice",
+      "name_km": "អង្ករផ្ការំដួលលេខ១ (បោះដុំ)",
+      "name_en": "Milled Premium Phka Rumduol Rice (Wholesale)",
+      "aliases_km": [
+        "អង្ករផ្ការំដួល",
+        "អង្ករក្រអូប",
+        "អង្ករ"
+      ],
+      "aliases_en": [
+        "phka rumduol rice",
+        "milled jasmine rice",
+        "white rice"
+      ],
+      "price_min": 3500,
+      "price_max": 3800,
+      "price_avg": 3650,
+      "unit": "kg",
+      "market": "Phsar Doeum Kor (Phnom Penh)",
+      "note_km": "អង្ករផ្កាម្លិះប្រណិតលេខ១",
+      "note_en": "Premium grade fragrant milled rice",
+      "market_km": "ផ្សារដើមគរ (ភ្នំពេញ)"
+    },
+    {
+      "id": "fresh_cassava",
+      "category": "cash_crop",
+      "name_km": "ដំឡូងមីស្រស់",
+      "name_en": "Fresh Cassava Root",
+      "aliases_km": [
+        "ដំឡូងមី",
+        "ដំឡូងមីស្រស់",
+        "ដំឡូង"
+      ],
+      "aliases_en": [
+        "cassava",
+        "fresh cassava",
+        "tapioca"
+      ],
+      "price_min": 330,
+      "price_max": 420,
+      "price_avg": 375,
+      "unit": "kg",
+      "market": "Battambang, Pailin & Kratie",
+      "note_km": "តម្លៃថ្លឹងនៅស្តង់ ឬរោងចក្រម្សៅមី (កម្រិតម្សៅ ~28-30%)",
+      "note_en": "Delivered to starch factory or collection stall",
+      "market_km": "បាត់ដំបង ប៉ៃលិន និងក្រចេះ"
+    },
+    {
+      "id": "dry_cassava",
+      "category": "cash_crop",
+      "name_km": "ដំឡូងមីស្ងួត (ចំណិត)",
+      "name_en": "Dried Cassava Chips",
+      "aliases_km": [
+        "ដំឡូងមីស្ងួត",
+        "ដំឡូងចំណិត",
+        "ដំឡូងស្ងួត"
+      ],
+      "aliases_en": [
+        "dry cassava",
+        "cassava chips"
+      ],
+      "price_min": 750,
+      "price_max": 880,
+      "price_avg": 810,
+      "unit": "kg",
+      "market": "Battambang & Banteay Meanchey Border",
+      "note_km": "ចំណិតដំឡូងមីហាលស្ងួតល្អសម្រាប់នាំចេញ",
+      "note_en": "Sun-dried cassava chips for feed/export",
+      "market_km": "តំបន់ព្រំដែន បាត់ដំបង និងបន្ទាយមានជ័យ"
+    },
+    {
+      "id": "raw_cashew",
+      "category": "cash_crop",
+      "name_km": "គ្រាប់ស្វាយចន្ទីស្រស់",
+      "name_en": "Raw Cashew Nuts (Wet)",
+      "aliases_km": [
+        "ស្វាយចន្ទី",
+        "គ្រាប់ស្វាយចន្ទី",
+        "ចន្ទី",
+        "ស្វាយចន្ទីស្រស់"
+      ],
+      "aliases_en": [
+        "cashew",
+        "raw cashew",
+        "wet cashew nuts"
+      ],
+      "price_min": 5600,
+      "price_max": 6800,
+      "price_avg": 6200,
+      "unit": "kg",
+      "market": "Kampong Thom & Ratanakiri",
+      "note_km": "គ្រាប់ស្រស់ទើបប្រមូលផល (ពូជ M23 / M10)",
+      "note_en": "Freshly harvested RCN (M23 / M10 varieties)",
+      "market_km": "កំពង់ធំ និងរតនគិរី"
+    },
+    {
+      "id": "dry_cashew",
+      "category": "cash_crop",
+      "name_km": "គ្រាប់ស្វាយចន្ទីស្ងួត",
+      "name_en": "Dried Cashew Nuts (Dry RCN)",
+      "aliases_km": [
+        "ស្វាយចន្ទីស្ងួត",
+        "គ្រាប់ស្វាយចន្ទីស្ងួត"
+      ],
+      "aliases_en": [
+        "dry cashew",
+        "dried cashew nuts"
+      ],
+      "price_min": 7200,
+      "price_max": 8500,
+      "price_avg": 7800,
+      "unit": "kg",
+      "market": "Kampong Thom, Kratie & Preah Vihear",
+      "note_km": "គ្រាប់ហាលស្ងួតល្អ សំណើម ៨-១០%",
+      "note_en": "Dried cashew nuts, 8-10% moisture",
+      "market_km": "កំពង់ធំ ក្រចេះ និងព្រះវិហារ"
+    },
+    {
+      "id": "red_corn",
+      "category": "cash_crop",
+      "name_km": "ពោតក្រហម (ចំណីសត្វ)",
+      "name_en": "Red Maize / Corn (Animal Feed)",
+      "aliases_km": [
+        "ពោតក្រហម",
+        "ពោត"
+      ],
+      "aliases_en": [
+        "red corn",
+        "maize",
+        "corn"
+      ],
+      "price_min": 950,
+      "price_max": 1150,
+      "price_avg": 1050,
+      "unit": "kg",
+      "market": "Battambang & Pailin",
+      "note_km": "ពោតគ្រាប់ស្ងួតសម្រាប់រោងចក្រចំណីសត្វ",
+      "note_en": "Dried corn grain for feed production",
+      "market_km": "បាត់ដំបង និងប៉ៃលិន"
+    },
+    {
+      "id": "rubber_cup_lump",
+      "category": "cash_crop",
+      "name_km": "ជ័រកៅស៊ូកក",
+      "name_en": "Natural Rubber Cup Lump",
+      "aliases_km": [
+        "កៅស៊ូ",
+        "ជ័រកៅស៊ូ",
+        "ជ័រកៅស៊ូកក"
+      ],
+      "aliases_en": [
+        "rubber",
+        "cup lump",
+        "natural rubber"
+      ],
+      "price_min": 3900,
+      "price_max": 4700,
+      "price_avg": 4300,
+      "unit": "kg",
+      "market": "Tbong Khmum & Kampong Cham",
+      "note_km": "កៅស៊ូកកកម្រិត DRC 50%",
+      "note_en": "Field cup lump DRC 50%",
+      "market_km": "ត្បូងឃ្មុំ និងកំពង់ចាម"
+    },
+    {
+      "id": "black_pepper",
+      "category": "cash_crop",
+      "name_km": "ម្រេចខ្មៅ",
+      "name_en": "Black Pepper",
+      "aliases_km": [
+        "ម្រេច",
+        "ម្រេចខ្មៅ"
+      ],
+      "aliases_en": [
+        "pepper",
+        "black pepper",
+        "kampot pepper"
+      ],
+      "price_min": 16000,
+      "price_max": 22000,
+      "price_avg": 19000,
+      "unit": "kg",
+      "market": "Tbong Khmum & Kampot",
+      "note_km": "ម្រេចខ្មៅស្ងួតគុណភាពល្អ",
+      "note_en": "Quality dried black peppercorn",
+      "market_km": "ត្បូងឃ្មុំ និងកំពត"
+    },
+    {
+      "id": "pailin_longan",
+      "category": "fruit",
+      "name_km": "តាង៉ែន / មៀនប៉ៃលិន",
+      "name_en": "Pailin Longan",
+      "aliases_km": [
+        "តាង៉ែន",
+        "មៀនប៉ៃលិន",
+        "មៀន"
+      ],
+      "aliases_en": [
+        "longan",
+        "pailin longan"
+      ],
+      "price_min": 3500,
+      "price_max": 5000,
+      "price_avg": 4200,
+      "unit": "kg",
+      "market": "Pailin & Battambang",
+      "note_km": "ផ្លែមៀនប៉ៃលិនស្រស់សម្រាប់វេចខ្ចប់នាំចេញ",
+      "note_en": "Fresh longan for export packaging",
+      "market_km": "ប៉ៃលិន និងបាត់ដំបង"
+    },
+    {
+      "id": "morning_glory",
+      "category": "vegetable",
+      "name_km": "បន្លែត្រកួន",
+      "name_en": "Water Spinach / Morning Glory",
+      "aliases_km": [
+        "ត្រកួន",
+        "បន្លែត្រកួន"
+      ],
+      "aliases_en": [
+        "morning glory",
+        "water spinach"
+      ],
+      "price_min": 1500,
+      "price_max": 2500,
+      "price_avg": 2000,
+      "unit": "kg",
+      "market": "Phsar Doeum Kor (Phnom Penh)",
+      "note_km": "តម្លៃលក់ដុំនៅផ្សារបោះដុំបន្លែ",
+      "note_en": "Wholesale vegetable market price",
+      "market_km": "ផ្សារដើមគរ (ភ្នំពេញ)"
+    }
+  ],
+  "source_km": "ក្រសួងកសិកម្ម (AMIS) និងសហព័ន្ធស្រូវអង្ករកម្ពុជា (CRF)"
+}

@@ -1,0 +1,22 @@
+@import 'tailwindcss';
+@import 'leaflet/dist/leaflet.css';
+
+@theme {
+  --font-sans: 'Inter', 'Noto Sans Khmer', system-ui, sans-serif;
+  --color-urgent: #dc2626;
+  --color-watch: #eab308;
+  --color-normal: #16a34a;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  @apply bg-slate-50 text-slate-900 antialiased;
+}
+.km {
+  font-family: 'Noto Sans Khmer', 'Inter', sans-serif;
+  line-height: 1.7;
+}

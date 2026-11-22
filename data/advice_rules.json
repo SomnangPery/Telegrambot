@@ -1,0 +1,41 @@
+{
+  "_note": "Approved advice list (tech design §7.1). Must be checked by an agriculture source before the event. The AI may only reword these; {hour} is filled in by code.",
+  "rules": [
+    {
+      "id": "heavy_rain",
+      "condition": "Heavy rain (>= 50 mm) or thunderstorm in the next 24 h",
+      "km": "កុំបាញ់ជី ឬថ្នាំសម្លាប់សត្វល្អិតថ្ងៃនេះ ព្រោះភ្លៀងនឹងលាងវាចេញ។ ប្រមូលស្រូវដែលកំពុងហាលចូល ហើយសម្អាតប្រឡាយទឹកក្នុងស្រែ។",
+      "en": "Don't spray fertilizer or pesticide today; the rain will wash it away. Bring in drying rice and clear field drains."
+    },
+    {
+      "id": "rain_after_hour",
+      "condition": "Rain expected to start later today",
+      "km": "សូមបញ្ចប់ការហាលស្រូវ ឬការច្រូតកាត់ មុន{hour}។",
+      "en": "Finish drying rice or harvest work before {hour}."
+    },
+    {
+      "id": "dry_spell",
+      "condition": "No rain for the next several days",
+      "km": "សូមសន្សំទឹក។ បើអាច ស្រោចទឹកនៅពេលព្រឹកព្រលឹម។",
+      "en": "Save water. Irrigate early in the morning if possible."
+    },
+    {
+      "id": "heat",
+      "condition": "Max temperature >= 35 °C",
+      "km": "សូមធ្វើការនៅពេលព្រឹកព្រលឹម។ ផ្តល់ម្លប់ និងទឹកឲ្យសត្វពាហនៈ។",
+      "en": "Work in the early morning. Give animals shade and water."
+    },
+    {
+      "id": "storm",
+      "condition": "Storm or strong wind",
+      "km": "សូមចងដំបូលផ្ទះ និងគ្របដំណាំដែលស្តុកទុកឲ្យជាប់។ ទុកសត្វនៅក្នុងក្រោល។",
+      "en": "Secure roofs and stored crops. Keep animals inside."
+    },
+    {
+      "id": "normal",
+      "condition": "Normal day",
+      "km": "ថ្ងៃនេះល្អសម្រាប់ធ្វើការងារនៅស្រែចម្ការ។",
+      "en": "Good day for field work."
+    }
+  ]
+}

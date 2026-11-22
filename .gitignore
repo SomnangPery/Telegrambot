@@ -1,0 +1,8 @@
+node_modules
+dist
+.env
+*.log
+.DS_Store
+data/fixtures/*.json
+!data/fixtures/.gitkeep
+data/dataef-cache/

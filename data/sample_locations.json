@@ -1,0 +1,32 @@
+{
+  "_note": "SAMPLE data for local development only. Names and codes follow the official 2-2-2-2 code pattern but must be replaced by the Ministry of Planning 2023 village/commune lists (pnpm db:import). Coordinates are approximate.",
+  "provinces": [{ "code": "02", "nameKm": "បាត់ដំបង", "nameEn": "Battambang" }],
+  "districts": [
+    { "code": "0201", "provinceCode": "02", "nameKm": "បាណន់", "nameEn": "Banan" },
+    { "code": "0203", "provinceCode": "02", "nameKm": "ក្រុងបាត់ដំបង", "nameEn": "Battambang City" },
+    { "code": "0208", "provinceCode": "02", "nameKm": "សង្កែ", "nameEn": "Sangkae" }
+  ],
+  "communes": [
+    { "code": "020101", "districtCode": "0201", "nameKm": "កន្ទឺ១", "nameEn": "Kantueu Muoy", "lat": 13.0, "lng": 103.24 },
+    { "code": "020301", "districtCode": "0203", "nameKm": "ទួលតាឯក", "nameEn": "Tuol Ta Aek", "lat": 13.105, "lng": 103.195 },
+    { "code": "020302", "districtCode": "0203", "nameKm": "ព្រែកព្រះស្តេច", "nameEn": "Preaek Preah Sdach", "lat": 13.085, "lng": 103.21 },
+    { "code": "020801", "districtCode": "0208", "nameKm": "អន្លង់វិល", "nameEn": "Anlong Vil", "lat": 13.15, "lng": 103.3 }
+  ],
+  "villages": [
+    { "code": "02030101", "communeCode": "020301", "nameKm": "ថ្មី", "nameEn": "Thmei", "lat": 13.112, "lng": 103.188 },
+    { "code": "02030102", "communeCode": "020301", "nameKm": "កណ្តាល", "nameEn": "Kandal", "lat": 13.106, "lng": 103.197 },
+    { "code": "02030103", "communeCode": "020301", "nameKm": "ព្រែកមហាទេព", "nameEn": "Preaek Mohatep", "lat": 13.099, "lng": 103.205 },
+    { "code": "02030104", "communeCode": "020301", "nameKm": "អូរតាគាំ", "nameEn": "Ou Ta Kam", "lat": 13.118, "lng": 103.201 },
+    { "code": "02030105", "communeCode": "020301", "nameKm": "ចំការសំរោង", "nameEn": "Chamkar Samraong", "lat": 13.094, "lng": 103.186 },
+    { "code": "02030106", "communeCode": "020301", "nameKm": "ស្វាយប៉ោ", "nameEn": "Svay Por", "lat": 13.101, "lng": 103.214 },
+    { "code": "02030201", "communeCode": "020302", "nameKm": "ព្រែកព្រះស្តេច", "nameEn": "Preaek Preah Sdach", "lat": 13.083, "lng": 103.215 },
+    { "code": "02030202", "communeCode": "020302", "nameKm": "ដងកោ", "nameEn": "Dang Kao", "lat": 13.079, "lng": 103.205 },
+    { "code": "02030203", "communeCode": "020302", "nameKm": "វត្តលាប", "nameEn": "Wat Leap", "lat": 13.09, "lng": 103.222 },
+    { "code": "02010101", "communeCode": "020101", "nameKm": "កន្ទឺ", "nameEn": "Kantueu", "lat": 13.003, "lng": 103.236 },
+    { "code": "02010102", "communeCode": "020101", "nameKm": "បឹងព្រីង", "nameEn": "Boeng Pring", "lat": 12.995, "lng": 103.248 },
+    { "code": "02010103", "communeCode": "020101", "nameKm": "តាគ្រាម", "nameEn": "Ta Kream", "lat": 13.008, "lng": 103.252 },
+    { "code": "02080101", "communeCode": "020801", "nameKm": "អន្លង់វិល", "nameEn": "Anlong Vil", "lat": 13.152, "lng": 103.296 },
+    { "code": "02080102", "communeCode": "020801", "nameKm": "កំពង់សីមា", "nameEn": "Kampong Seima", "lat": 13.158, "lng": 103.307 },
+    { "code": "02080103", "communeCode": "020801", "nameKm": "អូរស្រឡៅ", "nameEn": "Ou Sralau", "lat": 13.144, "lng": 103.311 }
+  ]
+}
