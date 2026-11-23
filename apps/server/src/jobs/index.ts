@@ -80,6 +80,41 @@ export async function morningBriefJob() {
   return res;
 }
 
+// ---------- 6 AM brief: exactly once per day, with catch-up ----------
+const localDate = (d = new Date()) => d.toLocaleDateString('en-CA', { timeZone: TZ }); // YYYY-MM-DD
+const localHour = (d = new Date()) => Number(d.toLocaleString('en-GB', { hour: '2-digit', hour12: false, timeZone: TZ }));
+const BRIEF_FROM_HOUR = 6;
+const BRIEF_UNTIL_HOUR = 11; // a missed brief is still sent if the server is back before 11:00
+let briefRunning = false;
+
+async function briefSentToday() {
+  const [row] = await db
+    .select()
+    .from(alertState)
+    .where(and(eq(alertState.villageCode, '*'), eq(alertState.kind, 'brief_day')))
+    .limit(1);
+  return !!row && localDate(row.lastSentAt) === localDate();
+}
+
+/**
+ * Sends today's brief if it hasn't gone out yet and it's between 06:00 and 11:00 local time.
+ * Runs at 06:00, every 10 minutes until 11:00, and at server start – so a server that was asleep
+ * or restarting at 6 AM still sends it, and never twice in one day.
+ */
+export async function dailyBriefJob() {
+  const hour = localHour();
+  if (hour < BRIEF_FROM_HOUR || hour >= BRIEF_UNTIL_HOUR || briefRunning) return { skipped: true };
+  if (await briefSentToday()) return { skipped: true, reason: 'already sent today' };
+  briefRunning = true;
+  try {
+    await markSent('*', 'brief_day'); // mark first so a parallel run can't send twice
+    console.log(`[jobs] daily brief for ${localDate()} starting (${hour}:xx)`);
+    return await morningBriefJob();
+  } finally {
+    briefRunning = false;
+  }
+}
+
 /** Hourly – urgent weather alert per village when the next 24 h crosses a threshold. */
 export async function weatherCheckJob() {
   const all = (await activeUsersWithTopics()).filter((u) => u.topics.has('weather'));
@@ -191,12 +226,17 @@ const safe = (name: string, fn: () => Promise<unknown>) => async () => {
 
 export function startScheduler() {
   cron.schedule('*/30 * * * *', safe('refresh', refreshCacheJob), { timezone: TZ });
-  cron.schedule('0 6 * * *', safe('brief', morningBriefJob), { timezone: TZ });
+  // 06:00 sharp, then every 10 minutes until 11:00 in case the server was asleep / restarting at 6.
+  cron.schedule('0 6 * * *', safe('brief', dailyBriefJob), { timezone: TZ });
+  cron.schedule('*/10 6-10 * * *', safe('brief-catch-up', dailyBriefJob), { timezone: TZ });
   cron.schedule('5 * * * *', safe('weather', weatherCheckJob), { timezone: TZ });
   cron.schedule('30 8 * * *', safe('rate', () => rateCheckJob(true)), { timezone: TZ });
   cron.schedule('35 9-17 * * *', safe('rate-early', () => rateCheckJob(false)), { timezone: TZ });
   cron.schedule('0 16 * * 1-5', safe('csx', csxCheckJob), { timezone: TZ });
   console.log('[jobs] scheduler started (Asia/Phnom_Penh)');
-  // Warm the cache at boot so the first reply never waits on an API.
-  void safe('refresh', refreshCacheJob)();
+  // Warm the cache at boot so the first reply never waits on an API, then send a missed brief.
+  void safe('refresh', async () => {
+    await refreshCacheJob();
+    await dailyBriefJob();
+  })();
 }

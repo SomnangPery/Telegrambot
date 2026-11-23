@@ -44,15 +44,18 @@ export async function buildBrief(
   if (has('weather')) {
     const forecast = await getForecast(v.village.forecastLocation ?? v.village.code);
     if (forecast?.data.length) {
-      const key = `${v.village.code}|${lang}`;
-      if (!memo.has(key)) memo.set(key, writeAdvice(forecast.data, lang));
+      // After 6 PM (Cambodia time) the brief is about tomorrow, so advice and warnings are too.
+      const hour = Number(new Date().toLocaleString('en-GB', { hour: '2-digit', hour12: false, timeZone: 'Asia/Phnom_Penh' }));
+      const days = hour >= 18 && forecast.data.length > 1 ? forecast.data.slice(1) : forecast.data;
+      const key = `${v.village.code}|${lang}|${days[0].date}`;
+      if (!memo.has(key)) memo.set(key, writeAdvice(days, lang));
       const [now, aqi, uv, advice] = await Promise.all([
         getCurrentWeather(province),
         getAqi(province).catch(() => null),
         getUv(province).catch(() => null),
         memo.get(key)!,
       ]);
-      const risk = assessRisk(forecast.data, 1);
+      const risk = assessRisk(days, 1);
       weather = {
         forecast,
         advice,

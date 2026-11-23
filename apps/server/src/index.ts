@@ -105,6 +105,18 @@ async function main() {
   // 4. Scheduler: 6 AM brief, hourly checks, cache refresh.
   startScheduler();
 
+  // 5. Keep-alive: Render's free plan sleeps after 15 min without inbound traffic, which would stop
+  //    the 6 AM brief and hourly alerts. Pinging our own public URL every 10 min keeps it awake
+  //    (one service ≈ 720 h/month, inside the 750 free hours). Turn off with KEEP_ALIVE=false.
+  if (ON_RENDER && PUBLIC_URL && (process.env.KEEP_ALIVE ?? 'true') !== 'false') {
+    const ping = () =>
+      fetch(`${PUBLIC_URL}/health`, { signal: AbortSignal.timeout(20_000) }).catch((e) =>
+        console.warn('[keep-alive] ping failed:', (e as Error).message),
+      );
+    setInterval(ping, 10 * 60_000);
+    console.log(`[keep-alive] pinging ${PUBLIC_URL}/health every 10 min`);
+  }
+
   const shutdown = async () => {
     if (mode === 'polling') await bot?.stop().catch(() => {});
     await app.close();

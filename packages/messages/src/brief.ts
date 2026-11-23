@@ -39,6 +39,7 @@ const T = {
   km: {
     hello: '☀️ អរុណសួស្តី!',
     weatherToday: '🌦 អាកាសធាតុថ្ងៃនេះ',
+    weatherTomorrow: '🌙 អាកាសធាតុថ្ងៃស្អែក',
     temp: 'សីតុណ្ហភាព',
     rain: 'ភ្លៀង',
     rainChance: 'ឱកាសភ្លៀង',
@@ -67,6 +68,7 @@ const T = {
   en: {
     hello: '☀️ Good morning!',
     weatherToday: '🌦 Weather today',
+    weatherTomorrow: '🌙 Weather tomorrow',
     temp: 'Temperature',
     rain: 'Rain',
     rainChance: 'chance of rain',
@@ -106,26 +108,43 @@ const arrow = (p: number) => (p > 0 ? '▲' : p < 0 ? '▼' : '•');
 const pct = (p: number) => `${arrow(p)} ${fmtNum(Math.abs(p), 2)}%`;
 const mm = (n: number) => fmtNum(n, n < 10 ? 1 : 0);
 
+const localHour = (d: Date) =>
+  Number(d.toLocaleString('en-GB', { hour: '2-digit', hour12: false, timeZone: 'Asia/Phnom_Penh' }));
+
+/** Greeting for the time of day in Cambodia. */
+export function greeting(lang: string, hour: number) {
+  const km = lang !== 'en';
+  if (hour >= 4 && hour < 11) return km ? '☀️ អរុណសួស្តី!' : '☀️ Good morning!';
+  if (hour >= 11 && hour < 17) return km ? '🌤 ទិវាសួស្តី!' : '🌤 Good afternoon!';
+  if (hour >= 17 && hour < 21) return km ? '🌇 សាយណ្ហសួស្តី!' : '🌇 Good evening!';
+  return km ? '🌙 រាត្រីសួស្តី!' : '🌙 Good night!';
+}
+
 export function detailedBrief(b: DetailedBriefInput): string | null {
   const l = L(b.lang);
   const t = T[l];
   const sections: string[][] = [];
 
-  // Header: greeting, place, date
-  const firstDay = b.weather?.forecast.data[0]?.date ?? new Date().toISOString().slice(0, 10);
+  // Header: greeting for the time of day, place, date + current time (Asia/Phnom_Penh)
+  const now = new Date();
+  const hour = localHour(now);
+  const evening = hour >= 18; // after 6 PM the useful forecast is tomorrow's
+  const todayDate = now.toLocaleDateString('en-CA', { timeZone: 'Asia/Phnom_Penh' });
+  const clock = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Phnom_Penh' });
   sections.push([
-    t.hello,
+    greeting(l, hour),
     l === 'km'
       ? `📍 ភូមិ${b.place.village} · ឃុំ/សង្កាត់${b.place.commune} · ${b.place.province}`
       : `📍 ${b.place.village}, ${b.place.commune}, ${b.place.province}`,
-    `📅 ${dayName(firstDay, b.lang)}`,
+    `📅 ${dayName(todayDate, b.lang)} · 🕘 ${clock}`,
   ]);
 
-  // Weather today (detailed)
+  // Main weather section: today, or tomorrow in the evening
   const w = b.weather;
-  const today = w?.forecast.data[0];
+  const today = w?.forecast.data[evening && w.forecast.data[1] ? 1 : 0];
   if (w && today) {
-    const lines = [`${t.weatherToday}${staleNote(b.lang, w.forecast)}`];
+    const title = evening && today !== w.forecast.data[0] ? t.weatherTomorrow : t.weatherToday;
+    const lines = [`${title}${staleNote(b.lang, w.forecast)}`];
     lines.push(`• ${CONDITION[l][today.condition] ?? today.condition}`);
     lines.push(
       `• ${t.temp}: ${fmtNum(today.tempMinC ?? today.tempMaxC)}–${fmtNum(today.tempMaxC)}°C`,

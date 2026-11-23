@@ -44,11 +44,12 @@ export async function cached<T>(
   mode: ReadMode = 'cache',
 ): Promise<Cached<T> | null> {
   const hit = await readCache<T>(key);
-  // While replying, never wait on the API: any cached value (fresh or stale) wins.
-  if (mode === 'cache' && hit) return hit;
+  // While replying: a fresh cached value wins. An expired one (e.g. after the server slept) gets a
+  // quick live refresh (max 3 s) and falls back to the old value, marked "updated HH:mm", if slow.
+  if (mode === 'cache' && hit && !hit.stale) return hit;
 
   try {
-    const data = await withTimeout(fetcher());
+    const data = await withTimeout(fetcher(), mode === 'cache' ? 3_000 : FETCH_TIMEOUT_MS);
     await writeCache(key, data, ttlMs);
     return { data, fetchedAt: new Date(), stale: false };
   } catch (err) {
